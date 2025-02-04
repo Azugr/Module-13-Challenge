@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CandidateList from '../components/CandidateList';
+import CandidateList from './CandidateList';
 import { Candidate } from '../interfaces/Candidate';
 
 const SavedCandidates: React.FC = () => {

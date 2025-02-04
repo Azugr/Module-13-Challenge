@@ -1,5 +1,5 @@
 import React from 'react';
-import CandidateCard from './CandidateCard/CandidateCard';
+import CandidateCard from '../components/CandidateCard/CandidateCard';
 import { Candidate } from '../interfaces/Candidate';
 
 interface CandidateListProps {

@@ -3,37 +3,31 @@ import axios from "axios";
 import CandidateCard from "../components/CandidateCard/CandidateCard";
 import { Candidate } from "../interfaces/Candidate";
 import NoData from "../components/NoData";
-import styles from "../styles/CandidateSearch.module.css";
+import styles from "../styles/Candidates.module.css";
 
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 // Helper function to fetch data from the GitHub API and map the response correctly
 const fetchGitHubUser = async (username: string): Promise<Candidate | null> => {
-  if (!username) return null; // Prevent empty search
-
   try {
-    const response = await fetch(`https://api.github.com/users/${username}`, {
+    const response = await axios.get(`https://api.github.com/users/${username}`, {
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
       },
     });
 
-    if (!response.ok) {
-      throw new Error(`GitHub API Error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
+    const data = response.data;
 
     // Map GitHub API response to match the `Candidate` interface
     return {
       id: data.id,
-      candidateName: data.name || "Not Available",
+      candidateName: data.name || "N/A",
       username: data.login,
       avatarUrl: data.avatar_url,
-      location: data.location || "Not Available",
-      email: data.email || "Not Available",
+      location: data.location || "N/A",
+      email: data.email || "N/A",
       htmlUrl: data.html_url,
-      company: data.company || "Not Available",
+      company: data.company || "N/A",
     };
   } catch (error) {
     console.error(`Error fetching data from GitHub API: ${error}`);
@@ -41,8 +35,7 @@ const fetchGitHubUser = async (username: string): Promise<Candidate | null> => {
   }
 };
 
-const CandidateSearch: React.FC = () => {
-  const [username, setUsername] = useState<string>("octocat"); // Default username to load initially
+const Candidates: React.FC = () => {
   const [currentCandidate, setCurrentCandidate] = useState<Candidate | null>(null);
   const [potentialCandidates, setPotentialCandidates] = useState<Candidate[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -55,21 +48,16 @@ const CandidateSearch: React.FC = () => {
     }
 
     // Fetch the first candidate
-    fetchCandidate();
+    fetchNextCandidate();
   }, []);
 
-  const fetchCandidate = async () => {
+  const fetchNextCandidate = async () => {
     setError(null);
-    if (!username.trim()) {
-      setError("Please enter a username.");
-      return;
-    }
-
-    try {
-      const result = await fetchGitHubUser(username);
+    const result = await fetchGitHubUser("octocat"); // Replace with dynamic username fetching logic
+    if (result) {
       setCurrentCandidate(result);
-    } catch (error) {
-      setError("Candidate not found or API limit exceeded.");
+    } else {
+      setError("No more candidates available.");
       setCurrentCandidate(null);
     }
   };
@@ -79,32 +67,22 @@ const CandidateSearch: React.FC = () => {
       const updatedCandidates = [...potentialCandidates, currentCandidate];
       setPotentialCandidates(updatedCandidates);
       localStorage.setItem("potentialCandidates", JSON.stringify(updatedCandidates));
-      fetchCandidate(); // Fetch the next candidate
+      fetchNextCandidate();
     }
   };
 
   const handleSkipCandidate = () => {
-    fetchCandidate(); // Fetch the next candidate
+    fetchNextCandidate();
   };
 
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        className={styles.searchInput}
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Search for candidates..."
-      />
-      <button className={styles.searchButton} onClick={fetchCandidate}>
-        Search
-      </button>
       {error && <p className={styles.errorMessage}>{error}</p>}
       {currentCandidate ? (
         <div>
           <CandidateCard
             id={currentCandidate.id}
-            candidateName={currentCandidate.candidateName || "Not Available"}
+            candidateName={currentCandidate.candidateName}
             username={currentCandidate.username}
             avatarUrl={currentCandidate.avatarUrl}
             location={currentCandidate.location}
@@ -128,4 +106,4 @@ const CandidateSearch: React.FC = () => {
   );
 };
 
-export default CandidateSearch;
+export default Candidates;
