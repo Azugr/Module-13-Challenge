@@ -1,0 +1,50 @@
+/* Color Variables */
+:root {
+  --primary-color: #007bff;
+  --primary-color-dark: #0056b3;
+  --secondary-color: #6c757d;
+  --secondary-color-dark: #545b62;
+  --danger-color: #dc3545;
+  --danger-color-dark: #a71d2a;
+  --background-color: #f9f9f9;
+  --text-color: #333;
+  --text-color-light: #555;
+  --text-color-lighter: #aaa;
+  --text-color-dark: #000;
+  --border-color: #ddd;
+  --box-shadow-color: #007bff;
+  --baby-blue: #89CFF0; /* Added baby blue color */
+}
+
+/* Spacing Variables */
+:root {
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+/* Font Size Variables */
+:root {
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-xxl: 2rem;
+}
+
+/* Border Radius Variables */
+:root {
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+}
+
+/* Transition Variables */
+:root {
+  --transition-fast: 0.2s;
+  --transition-medium: 0.4s;
+  --transition-slow: 0.6s;
+}

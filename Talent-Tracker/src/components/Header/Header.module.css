@@ -1,0 +1,40 @@
+/* 🌐 Header Container */
+.header {
+    background-color: var(--primary-color-dark); /* Deep Blue */
+    color: white;
+    text-align: center;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 8px var(--box-shadow-color);
+}
+
+/* ✨ Title */
+.title {
+    font-size: var(--font-size-xxl);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* 🔗 Navigation */
+.nav {
+    margin-top: var(--spacing-md);
+}
+
+/* 📌 Navigation List */
+.navList {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+/* 🔗 Navigation Item */
+.navItem {
+    margin: 0 var(--spacing-md);
+}
+
+/* 🔗 Navigation Link */
+.navLink {
+    text-decoration: none;
+    color: white;
+}
