@@ -1,20 +1,28 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import CandidateSearch from "./pages/CandidateSearch";
-import SavedCandidates from "./pages/SavedCandidates";
-import NotFound from "./pages/NotFound";
-import NavBar from "./components/NavBar/NavBar";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import NavBar from './components/NavBar/NavBar';
+import CandidateSearch from './pages/CandidateSearch';
+import CandidatesList from './pages/CandidatesList';
+import SavedCandidates from './pages/SavedCandidates';
+import { CandidateProvider } from './context/CandidateContext';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Router>
-      <NavBar /> {/* Add navigation bar */}
-      <Routes>
-        <Route path="/" element={<CandidateSearch />} /> {/* Default page */}
-        <Route path="/saved" element={<SavedCandidates />} />
-        <Route path="*" element={<NotFound />} /> {/* Catch-all for unknown routes */}
-      </Routes>
-    </Router>
+    <CandidateProvider>
+      <Router>
+        <div className="App">
+          <NavBar />
+          <main className="container">
+            <Routes>
+              <Route path="/" element={<CandidateSearch />} />
+              <Route path="/CandidatesList" element={<CandidatesList />} />
+              <Route path="/SavedCandidates" element={<SavedCandidates />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </CandidateProvider>
   );
-}
+};
 
 export default App;

@@ -82,7 +82,7 @@ const Candidates: React.FC = () => {
         <div>
           <CandidateCard
             id={currentCandidate.id}
-            candidateName={currentCandidate.candidateName}
+            candidateName={currentCandidate.candidateName || "N/A"}
             username={currentCandidate.username}
             avatarUrl={currentCandidate.avatarUrl}
             location={currentCandidate.location}

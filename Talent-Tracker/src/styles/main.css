@@ -1,51 +1,55 @@
 /* 🌐 Import Global Variables */
 @import url("./variables.css");
 
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+#root {
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
 }
 
 /* 🛠️ Reset some default browser styles */
 * {
-    margin: 0;
+    margin: 1%;
     padding: 0;
     box-sizing: border-box;
 }
 
 /* 📌 Global Body Styles */
 body {
+    background: linear-gradient(to bottom, #0a0f45, #000000);
+    color: white;
+    font-family: Arial, sans-serif;
+    height: 100vh;  
+    width: 100vw; 
+    overflow: hidden; 
+}
+
+/* 📌 Fix container height */
+.container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start; 
     align-items: center;
-    height: 100vh; /* Ensure body takes the full height of the viewport */
-    width: 100vw; /* Ensure the body takes the full width of the viewport */
+    height: 100vh;  
+    width: 100vw;   
+    overflow: hidden; 
+    padding-top: 20px; 
 }
 
-/* Global Styles for Form Containers */
-.card-container {
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow cards to wrap to the next line */
-    justify-content: center; /* Center the cards */
-    align-items: stretch; /* Stretch the cards to fill the height */
-    height: 100vh; /* Ensure the container takes the full height of the viewport */
-    padding: 20px; /* Add some padding around the container */
-}
-
+/* 🎴 Candidate Card */
 .card {
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    width: 90%;  
+    background: white;
     border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out;
-    flex: 1 1 300px; /* Allow cards to grow and shrink, with a base width */
-    margin: 10px; /* Add some margin between cards */
-    min-height: 200px; /* Set a minimum height for the cards */
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0;  
+    padding: 15px;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card:hover {
@@ -53,8 +57,13 @@ body {
 }
 
 .cardImg {
-    width: 100%;
+    width: 100%;  
+    max-width: 250px; 
+    border-radius: 50%;
     height: auto;
+    max-height: 50vh; 
+    object-fit: cover; 
+    margin-bottom: 10px;
 }
 
 .cardBody {
@@ -72,13 +81,13 @@ body {
     color: #555;
 }
 
-.cardLink {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.cardLink:hover {
-    text-decoration: underline;
+/* 🔘 Accept & Reject Buttons */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 0; 
+    padding-bottom: 0;
 }
 
 /* 🔗 Links */
@@ -101,18 +110,18 @@ input, textarea {
     border-radius: var(--border-radius-md);
     margin-bottom: 1rem;
     width: 100%;
-    background-color: var(--baby-blue); /* Set background color to baby blue */
+    background-color: var(--baby-blue);
     color: var(--text-color);
 }
 
 input:focus, textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    background-color: var(--baby-blue); /* Set background color to baby blue */
+    background-color: var(--baby-blue);
     color: var(--text-color);
 }
 
-/* Responsive adjustments */
+/* 📌 Responsive adjustments */
 @media (min-width: 600px) {
     .form-container {
         margin: 50px auto;

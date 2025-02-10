@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CandidateCard from "../components/CandidateCard/CandidateCard";
+import Button from "../components/Button/Button";
 import { Candidate } from "../interfaces/Candidate";
 import NoData from "../components/NoData";
 import styles from "../styles/CandidateSearch.module.css";
+import buttonStyles from '../components/Button/Button.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
-// Helper function to fetch data from the GitHub API and map the response correctly
 const fetchGitHubUser = async (username: string): Promise<Candidate | null> => {
-  if (!username) return null; // Prevent empty search
-
   try {
     const response = await fetch(`https://api.github.com/users/${username}`, {
       headers: {
@@ -24,16 +24,15 @@ const fetchGitHubUser = async (username: string): Promise<Candidate | null> => {
 
     const data = await response.json();
 
-    // Map GitHub API response to match the `Candidate` interface
     return {
       id: data.id,
-      candidateName: data.name || "Not Available",
+      candidateName: data.name || 'Not Available',
       username: data.login,
       avatarUrl: data.avatar_url,
-      location: data.location || "Not Available",
-      email: data.email || "Not Available",
+      location: data.location || 'Not Available',
+      email: data.email || 'Not Available',
       htmlUrl: data.html_url,
-      company: data.company || "Not Available",
+      company: data.company || 'Not Available',
     };
   } catch (error) {
     console.error(`Error fetching data from GitHub API: ${error}`);
@@ -42,34 +41,34 @@ const fetchGitHubUser = async (username: string): Promise<Candidate | null> => {
 };
 
 const CandidateSearch: React.FC = () => {
-  const [username, setUsername] = useState<string>("octocat"); // Default username to load initially
   const [currentCandidate, setCurrentCandidate] = useState<Candidate | null>(null);
   const [potentialCandidates, setPotentialCandidates] = useState<Candidate[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Load potential candidates from localStorage
-    const savedCandidates = localStorage.getItem("potentialCandidates");
+    const savedCandidates = localStorage.getItem('candidates');
     if (savedCandidates) {
       setPotentialCandidates(JSON.parse(savedCandidates));
     }
 
-    // Fetch the first candidate
     fetchCandidate();
   }, []);
 
   const fetchCandidate = async () => {
     setError(null);
-    if (!username.trim()) {
-      setError("Please enter a username.");
-      return;
-    }
+    const username = generateRandomUsername();
 
     try {
       const result = await fetchGitHubUser(username);
-      setCurrentCandidate(result);
+      if (result) {
+        setCurrentCandidate(result);
+      } else {
+        setError('Candidate not found or API limit exceeded.');
+        setCurrentCandidate(null);
+      }
     } catch (error) {
-      setError("Candidate not found or API limit exceeded.");
+      setError('Candidate not found or API limit exceeded.');
       setCurrentCandidate(null);
     }
   };
@@ -78,33 +77,32 @@ const CandidateSearch: React.FC = () => {
     if (currentCandidate) {
       const updatedCandidates = [...potentialCandidates, currentCandidate];
       setPotentialCandidates(updatedCandidates);
-      localStorage.setItem("potentialCandidates", JSON.stringify(updatedCandidates));
-      fetchCandidate(); // Fetch the next candidate
+      localStorage.setItem('candidates', JSON.stringify(updatedCandidates));
+      fetchCandidate();
     }
   };
 
   const handleSkipCandidate = () => {
-    fetchCandidate(); // Fetch the next candidate
+    fetchCandidate();
+  };
+
+  const handleViewCandidatesList = () => {
+    navigate('/candidates-list');
+  };
+
+  const generateRandomUsername = () => {
+    const usernames = ['octocat', 'torvalds', 'gaearon', 'yyx990803', 'addyosmani'];
+    return usernames[Math.floor(Math.random() * usernames.length)];
   };
 
   return (
-    <div className={styles.container}>
-      <input
-        type="text"
-        className={styles.searchInput}
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Search for candidates..."
-      />
-      <button className={styles.searchButton} onClick={fetchCandidate}>
-        Search
-      </button>
-      {error && <p className={styles.errorMessage}>{error}</p>}
+    <div className="container text-center">
+      {error && <p className="text-danger">{error}</p>}
       {currentCandidate ? (
         <div>
           <CandidateCard
             id={currentCandidate.id}
-            candidateName={currentCandidate.candidateName || "Not Available"}
+            candidateName={currentCandidate.candidateName || 'Not Available'}
             username={currentCandidate.username}
             avatarUrl={currentCandidate.avatarUrl}
             location={currentCandidate.location}
@@ -112,12 +110,15 @@ const CandidateSearch: React.FC = () => {
             htmlUrl={currentCandidate.htmlUrl}
             company={currentCandidate.company}
           />
-          <div className={styles.buttonContainer}>
-            <button className={styles.saveButton} onClick={handleSaveCandidate}>
+          <div className="d-flex justify-content-center gap-3 mt-3">
+            <button onClick={handleSaveCandidate} className="btn btn-success">
               +
             </button>
-            <button className={styles.skipButton} onClick={handleSkipCandidate}>
+            <button onClick={handleSkipCandidate} className="btn btn-danger">
               -
+            </button>
+            <button onClick={handleViewCandidatesList} className="btn btn-primary">
+              View Candidates List
             </button>
           </div>
         </div>

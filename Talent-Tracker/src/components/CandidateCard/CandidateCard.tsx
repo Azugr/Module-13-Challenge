@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './CandidateCard.module.css';
-import { DEFAULT_AVATAR_URL } from '../utils/constants';
 
 interface CandidateProps {
   id: string;
@@ -13,7 +12,6 @@ interface CandidateProps {
   company?: string;
 }
 
-// Functional component for displaying candidate details
 const CandidateCard: React.FC<CandidateProps> = ({
   candidateName,
   username,
@@ -25,7 +23,6 @@ const CandidateCard: React.FC<CandidateProps> = ({
 }) => {
   return (
     <div className={styles.card}>
-      {/* Candidate Avatar */}
       <img src={avatarUrl} alt={`${candidateName}'s avatar`} className={styles.cardImg} />
       <div className={styles.cardBody}>
         <h2 className={styles.cardTitle}>{candidateName}</h2>

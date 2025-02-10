@@ -1,0 +1,29 @@
+/* Container for the saved candidates page */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  /* Title for the saved candidates page */
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Styles for the candidate cards */
+  .candidateCard {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  /* Message for when no candidates are found */
+  .noCandidatesMessage {
+    font-size: 1.25rem;
+    color: #666;
+  }

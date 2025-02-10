@@ -1,23 +1,24 @@
-import React from "react";
-import styles from "./NavBar.module.css"; 
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styles from './NavBar.module.css';
 
-const Navbar: React.FC = () => {
+const NavBar: React.FC = () => {
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.navbarBrand}>Talent Tracker</div>
-      <ul className={styles.navbarLinks}>
-        <li className={styles.navbarItem}>
-          <a href="/" className={styles.navbarLink}>Home</a>
+    <nav className={styles.navBar}>
+      <h1 className={styles.title}>Talent Tracker</h1>
+      <ul className={styles.navLinks}>
+        <li>
+          <Link to="/" className={styles.navLink}>Home</Link>
         </li>
-        <li className={styles.navbarItem}>
-          <a href="/candidates" className={styles.navbarLink}>Candidates</a>
+        <li>
+          <Link to="/CandidatesList" className={styles.navLink}>Candidates List</Link>
         </li>
-        <li className={styles.navbarItem}>
-          <a href="/saved" className={styles.navbarLink}>Saved</a>
+        <li>
+          <Link to="/SavedCandidates" className={styles.navLink}>Saved Candidates</Link>
         </li>
       </ul>
     </nav>
   );
 };
 
-export default Navbar;
+export default NavBar;
