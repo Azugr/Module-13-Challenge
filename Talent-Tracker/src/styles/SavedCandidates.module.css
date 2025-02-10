@@ -4,7 +4,6 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #f8f9fa;
     min-height: 100vh;
   }
   
@@ -12,7 +11,7 @@
   h2 {
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #333;
+
   }
   
   /* Styles for the candidate cards */
@@ -25,5 +24,4 @@
   /* Message for when no candidates are found */
   .noCandidatesMessage {
     font-size: 1.25rem;
-    color: #666;
   }

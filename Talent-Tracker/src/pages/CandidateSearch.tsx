@@ -73,11 +73,24 @@ const CandidateSearch: React.FC = () => {
     }
   };
 
+  const saveCandidate = (candidate: Candidate) => {
+    const savedCandidates = JSON.parse(localStorage.getItem("candidates") || "[]");
+
+    // ✅ Check if the candidate is already in the list
+    const isDuplicate = savedCandidates.some((saved: Candidate) => saved.username === candidate.username);
+
+    if (!isDuplicate) {
+      savedCandidates.push(candidate);
+      localStorage.setItem("candidates", JSON.stringify(savedCandidates));
+      setPotentialCandidates(savedCandidates);
+    } else {
+      console.log("Candidate already saved!");
+    }
+  };
+
   const handleSaveCandidate = () => {
     if (currentCandidate) {
-      const updatedCandidates = [...potentialCandidates, currentCandidate];
-      setPotentialCandidates(updatedCandidates);
-      localStorage.setItem('candidates', JSON.stringify(updatedCandidates));
+      saveCandidate(currentCandidate);
       fetchCandidate();
     }
   };

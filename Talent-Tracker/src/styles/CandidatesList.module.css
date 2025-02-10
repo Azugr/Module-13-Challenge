@@ -1,29 +1,31 @@
 /* Container for the candidates list page */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #920c5a;
-    min-height: 100vh;
-  }
-  
-  /* Title for the candidates list page */
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* Styles for the candidate cards */
-  .candidateCard {
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
-  }
-  
-  /* Message for when no candidates are found */
-  .noCandidatesMessage {
-    font-size: 1.25rem;
-    color: #666;
-  }
+.candidates-container {
+  display: flex;
+  flex-wrap: wrap;  
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 100%;
+  height: 80vh;  
+  overflow-y: auto; 
+}
+
+/* Title for the candidates list page */
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Styles for the candidate cards */
+.candidateCard {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+/* Message for when no candidates are found */
+.noCandidatesMessage {
+  font-size: 1.25rem;
+  color: #666;
+}
