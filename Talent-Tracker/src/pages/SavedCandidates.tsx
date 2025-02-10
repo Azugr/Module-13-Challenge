@@ -21,19 +21,41 @@ const SavedCandidates: React.FC = () => {
     <div className={styles.container}>
       <h2>Saved Candidates</h2>
       {candidates.length > 0 ? (
-        candidates.map(candidate => (
-          <CandidateCard
-            key={candidate.id}
-            id={candidate.id}
-            candidateName={candidate.candidateName || 'N/A'}
-            username={candidate.username}
-            avatarUrl={candidate.avatarUrl}
-            location={candidate.location || 'N/A'}
-            email={candidate.email || 'N/A'}
-            htmlUrl={candidate.htmlUrl}
-            company={candidate.company || 'N/A'}
-          />
-        ))
+        <table className="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Email</th>
+              <th>Company</th>
+              <th>Profile</th>
+            </tr>
+          </thead>
+          <tbody>
+            {candidates.map((candidate, index) => (
+              <tr key={index}>
+                <td>
+                  <img
+                    src={candidate.avatarUrl}
+                    alt={candidate.candidateName}
+                    className="rounded-circle"
+                    style={{ width: '50px', height: '50px' }}
+                  />
+                </td>
+                <td><strong>{candidate.candidateName}</strong></td>
+                <td>{candidate.location || 'Unknown'}</td>
+                <td>{candidate.email || 'Not provided'}</td>
+                <td>{candidate.company || 'Not provided'}</td>
+                <td>
+                  <a href={candidate.htmlUrl} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    View Profile
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p>No candidates found.</p>
       )}
