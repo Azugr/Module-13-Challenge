@@ -3,16 +3,18 @@ import CandidateCard from '../components/CandidateCard/CandidateCard';
 import { Candidate } from '../interfaces/Candidate';
 import styles from '../styles/SavedCandidates.module.css';
 
-
 const SavedCandidates: React.FC = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
 
   useEffect(() => {
     // Load saved candidates from localStorage
-    const savedCandidates = localStorage.getItem('savedCandidates');
-    if (savedCandidates) {
-      setCandidates(JSON.parse(savedCandidates));
+    const savedCandidates = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
+
+    if (savedCandidates.length === 0) {
+      localStorage.removeItem('savedCandidates'); // Clear storage if empty
     }
+
+    setCandidates(savedCandidates);
   }, []);
 
   return (

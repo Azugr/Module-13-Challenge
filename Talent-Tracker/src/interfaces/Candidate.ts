@@ -1,11 +1,11 @@
 export interface Candidate {
   id: string;
+  candidateName: string;
   username: string;
   avatarUrl: string;
+  location?: string;
+  email?: string;
   htmlUrl: string;
-  candidateName?: string; 
-  bio?: string; 
-  location?: string; 
-  company?: string; 
-  email?: string; 
+  company?: string;
 }
+
