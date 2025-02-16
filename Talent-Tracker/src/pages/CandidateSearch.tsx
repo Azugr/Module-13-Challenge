@@ -57,8 +57,13 @@ const CandidateSearch: React.FC = () => {
 
   const fetchCandidate = async () => {
     setError(null);
-    const username = generateRandomUsername();
-
+    const username = await generateRandomUsername();
+  
+    if (!username) {
+      setError('Failed to generate a random username.');
+      return;
+    }
+  
     try {
       const result = await fetchGitHubUser(username);
       if (result) {
@@ -72,6 +77,7 @@ const CandidateSearch: React.FC = () => {
       setCurrentCandidate(null);
     }
   };
+
 
   const saveCandidate = (candidate: Candidate) => {
     const storedCandidates = JSON.parse(localStorage.getItem("candidatesList") || "[]");
@@ -105,9 +111,28 @@ const CandidateSearch: React.FC = () => {
     navigate('/candidates-list');
   };
 
-  const generateRandomUsername = () => {
-    const usernames = ['octocat', 'torvalds', 'gaearon', 'yyx990803', 'addyosmani'];
-    return usernames[Math.floor(Math.random() * usernames.length)];
+  const generateRandomUsername = async (): Promise<string | null> => {
+    try {
+      const response = await fetch('https://api.github.com/users?since=' + Math.floor(Math.random() * 1000000), {
+        headers: {
+          Authorization: `Bearer ${GITHUB_TOKEN}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`GitHub API Error: ${response.status} ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      if (data.length > 0) {
+        return data[0].login;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error(`Error fetching random GitHub user: ${error}`);
+      return null;
+    }
   };
 
   return (
